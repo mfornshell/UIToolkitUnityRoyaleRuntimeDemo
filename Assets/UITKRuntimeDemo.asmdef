@@ -2,12 +2,11 @@
     "name": "UITKRuntimeDemo",
     "rootNamespace": "",
     "references": [
-        "UnityEngine.UIElementsModule",
         "Unity.Addressables",
         "Unity.ResourceManager",
         "Cinemachine",
         "Unity.Timeline",
-        "NavMeshComponents"
+        "Unity.AI.Navigation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

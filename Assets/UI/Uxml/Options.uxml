@@ -1,14 +1,27 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <UnityRoyale.OptionsScreen name="screen" class="screen screen--tinted">
-        <Style src="Menu.uss" />
-        <Style src="OptionsScreen.uss" />
+    <Style src="project://database/Assets/UI/Uxml/Menu.uss?fileID=7433441132597879392&amp;guid=728db0109e7ba4f428bda49d2e754250&amp;type=3#Menu" />
+    <Style src="project://database/Assets/UI/Uxml/OptionsScreen.uss?fileID=7433441132597879392&amp;guid=01d023b27ace95c4084c6939fb42d8ba&amp;type=3#OptionsScreen" />
+    <UnityRoyale.OptionsScreen name="screen" data-source="project://database/Assets/GameData/ViewModels/OptionsVM.asset?fileID=11400000&amp;guid=87d19381f70017e4ea3d01cd62474220&amp;type=2#OptionsVM" class="screen screen--tinted">
         <ui:VisualElement name="options-pane" class="options-pane">
             <ui:Label text="Options" name="options-header" class="header" />
             <ui:VisualElement name="options-container" class="options-container">
-                <ui:Toggle label="Music" name="music-toggle" text="ON" value="false" />
+                <ui:Toggle label="Music" name="music-toggle" text="ON" value="false">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="MuteMusic.Value" binding-mode="ToTarget" source-to-ui-converters="Value to Text" />
+                        <ui:DataBinding property="value" data-source-path="MuteMusic.Value" binding-mode="TwoWay" />
+                    </Bindings>
+                </ui:Toggle>
                 <ui:VisualElement name="speed-slider-container" class="options-speed-container">
-                    <ui:SliderInt picking-mode="Ignore" label="Speed" value="2" high-value="3" low-value="1" name="speed-slider" style="width: 206px;" />
-                    <ui:Label text="1" name="speed-value-label" class="options-speed__value" />
+                    <ui:SliderInt picking-mode="Ignore" label="Speed" value="2" high-value="3" low-value="1" name="speed-slider" style="width: 206px;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-path="GameSpeed.Value" binding-mode="TwoWay" />
+                        </Bindings>
+                    </ui:SliderInt>
+                    <ui:Label text="1" name="speed-value-label" class="options-speed__value">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="GameSpeed.Get" binding-mode="ToTarget" />
+                        </Bindings>
+                    </ui:Label>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:Button name="back-button" text="Back" class="button" style="width: 195px; height: 60px;" />

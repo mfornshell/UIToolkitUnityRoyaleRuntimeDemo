@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Template name="TitleScreen" src="TitleScreen.uxml" />
-    <ui:Template name="Options" src="Options.uxml" />
-    <ui:Template name="About" src="About.uxml" />
+    <ui:Template name="TitleScreen" src="project://database/Assets/UI/Uxml/TitleScreen.uxml?fileID=9197481963319205126&amp;guid=055a69693438f494387836c359c52256&amp;type=3#TitleScreen" />
+    <ui:Template name="Options" src="project://database/Assets/UI/Uxml/Options.uxml?fileID=9197481963319205126&amp;guid=a435a561c7cb146ec86c8de3dc1385aa&amp;type=3#Options" />
+    <ui:Template name="About" src="project://database/Assets/UI/Uxml/About.uxml?fileID=9197481963319205126&amp;guid=e8c411665d9dd7f418d3bdf79e15d9de&amp;type=3#About" />
+    <Style src="project://database/Assets/UI/Uxml/TitleScreenManager.uss?fileID=7433441132597879392&amp;guid=7ffc7de2d0c27bb4cbb3fce7f9b33037&amp;type=3#TitleScreenManager" />
     <UnityRoyale.TitleScreenManager class="screen">
-        <Style src="TitleScreenManager.uss" />
-        <ui:Instance template="TitleScreen" name="TitleScreen" class="screen" />
+        <ui:Instance template="TitleScreen" name="TitleScreen" class="screen" style="display: flex;" />
         <ui:Instance template="Options" name="OptionsScreen" class="screen" style="display: none;" />
         <ui:Instance template="About" name="AboutScreen" class="screen" style="display: none;" />
     </UnityRoyale.TitleScreenManager>

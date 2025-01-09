@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Uxml/Menu.uss?fileID=7433441132597879392&amp;guid=728db0109e7ba4f428bda49d2e754250&amp;type=3#Menu" />
+    <Style src="project://database/Assets/UI/Uxml/TitleScreen.uss?fileID=7433441132597879392&amp;guid=dcfda7681245aca46820859a9965a80c&amp;type=3#TitleScreen" />
     <ui:VisualElement name="screen" class="screen">
-        <Style src="Menu.uss" />
-        <Style src="TitleScreen.uss" />
         <ui:VisualElement name="button-panel" class="title-screen-pane">
             <ui:Button name="start" text="Start" class="button" />
             <ui:Button name="options" text="Options" class="button" />
