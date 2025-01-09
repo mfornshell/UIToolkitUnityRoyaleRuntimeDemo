@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
 	{
 		audioSource = GetComponent<AudioSource>();
 
-		muteMusic = PlayerPrefs.GetInt(OptionsScreen.PlayerPrefsMuteMusicKey, 0) == 0;
+		muteMusic = PlayerPrefs.GetInt(OptionsController.MuteMusicKey, 0) == 0;
 		
 		audioSource.Play();
 		

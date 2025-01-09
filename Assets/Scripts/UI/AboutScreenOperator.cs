@@ -3,15 +3,14 @@ using UnityEngine.UIElements;
 
 namespace UnityRoyale
 {
-    public class AboutScreenOperator : VisualElement
+    [UxmlElement]
+    public partial class AboutScreenOperator : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<AboutScreenOperator, UxmlTraits> { }
-
         ScrollView m_ScrollView;
 
         public AboutScreenOperator()
         {
-            this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
+            RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
         }
 
         void OnGeometryChange(GeometryChangedEvent evt)
@@ -19,7 +18,7 @@ namespace UnityRoyale
             m_ScrollView = this.Q<ScrollView>();
             Animate();
 
-            this.UnregisterCallback<GeometryChangedEvent>(OnGeometryChange);
+            UnregisterCallback<GeometryChangedEvent>(OnGeometryChange);
         }
 
         public void Animate()

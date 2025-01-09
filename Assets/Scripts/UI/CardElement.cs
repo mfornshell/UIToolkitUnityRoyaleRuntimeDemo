@@ -4,12 +4,9 @@ using UnityEngine.UIElements.Experimental;
 
 namespace UnityRoyale
 {
-    public class CardElement : VisualElement
+    [UxmlElement]
+    public partial class CardElement : VisualElement
     {
-        // UxmlFactory and UxmlTraits allow UIBuilder to use CardElement as a building block
-        public new class UxmlFactory : UxmlFactory<CardElement, UxmlTraits> {}
-        public new class UxmlTraits : VisualElement.UxmlTraits {}
-
         public CardData cardData { get; private set; }
 
         public void Init(CardData cardData)
