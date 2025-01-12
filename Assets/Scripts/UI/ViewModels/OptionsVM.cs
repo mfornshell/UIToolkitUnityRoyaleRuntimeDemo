@@ -9,6 +9,7 @@ public class OptionsVM : ViewModel
 {
     [CreateProperty] public Observer<bool> MuteMusic { get; set; } = new();
     [CreateProperty] public Observer<int> GameSpeed { get; set; } = new();
+    public ButtonCommand BackCommand { get; set; }
 
 #if UNITY_EDITOR
     [InitializeOnLoadMethod]

@@ -5,22 +5,23 @@ using UnityRoyale;
 
 public class AboutController : UIController<AboutVM>
 {
-    AboutScreenOperator _operator;
+    AboutScreenOperator _scroll;
 
     public event Action BackPressed;
 
     void Start()
     {
-        var _aboutView = view.rootVisualElement;
-        _operator = _aboutView.Q<AboutScreenOperator>();
+        var root = view.rootVisualElement;
+        _scroll = root.Q<AboutScreenOperator>();
 
-        _aboutView?.Q("back-button")?.RegisterCallback<ClickEvent>(ev => OnBackPressed());
+        viewModel.BackCommand = new ButtonCommand(OnBackPressed);
+        root?.Q("back-button")?.RegisterCallback<ClickEvent>(ev => viewModel.BackCommand.Execute());
     }
 
     public override void Show()
     {
         base.Show();
-        _operator.Animate();
+        _scroll.Animate();
     }
 
     public void OnBackPressed()

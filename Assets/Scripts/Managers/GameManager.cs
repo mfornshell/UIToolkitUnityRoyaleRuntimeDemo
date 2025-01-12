@@ -64,6 +64,8 @@ namespace UnityRoyale
 
         private void Start()
         {
+            Time.timeScale = PlayerPrefs.GetInt(OptionsController.GameSpeedKey);
+
             //Insert castles into lists
             SetupPlaceable(playersCastle, castlePData, Placeable.Faction.Player);
             SetupPlaceable(opponentCastle, castlePData, Placeable.Faction.Opponent);

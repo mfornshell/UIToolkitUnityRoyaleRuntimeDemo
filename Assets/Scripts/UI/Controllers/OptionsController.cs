@@ -11,18 +11,14 @@ public class OptionsController : UIController<OptionsVM>
 
     void Start()
     {
-        viewModel.MuteMusic.Value = PlayerPrefs.GetInt(MuteMusicKey, 1) switch
-        {
-            1 => true,
-            0 => false,
-            _ => throw new Exception("Out of Range!")
-        };
+        viewModel.MuteMusic.Value = PlayerPrefs.GetInt(MuteMusicKey, 0) == 1;
         viewModel.GameSpeed.Value = PlayerPrefs.GetInt(GameSpeedKey, 1);
 
         viewModel.MuteMusic.OnValueChanged += OnMuteMusic;
         viewModel.GameSpeed.OnValueChanged += OnGameSpeedChanged;
+        viewModel.BackCommand = new ButtonCommand(OnBackPressed);
 
-        view.rootVisualElement.Q("back-button")?.RegisterCallback<ClickEvent>(ev => OnBackPressed());
+        view.rootVisualElement.Q("back-button")?.RegisterCallback<ClickEvent>(ev => viewModel.BackCommand.Execute());
     }
 
     void OnMuteMusic(bool b) => PlayerPrefs.SetInt(MuteMusicKey, b ? 1 : 0);

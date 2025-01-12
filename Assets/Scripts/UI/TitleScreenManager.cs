@@ -5,7 +5,7 @@ namespace UnityRoyale
 {
     public class TitleScreenManager : MonoBehaviour
     {
-        static string m_SceneName => "Main";
+        static string s_Scene => "Main";
 
         [SerializeField] TitleController _title;
         [SerializeField] OptionsController _options;
@@ -27,6 +27,6 @@ namespace UnityRoyale
         void EnableOptionsScreen() => _options.Show();
         void EnableAboutScreen() => _about.Show();
 
-        void StartGame() => SceneManager.LoadSceneAsync(m_SceneName);
+        void StartGame() => SceneManager.LoadSceneAsync(s_Scene);
     }
 }
