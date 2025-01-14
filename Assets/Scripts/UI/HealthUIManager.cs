@@ -16,13 +16,14 @@ namespace UnityRoyale
         [SerializeField] Color red = new Color32(252, 35, 13, 255);
         [SerializeField] Color blue = new Color32(31, 132, 255, 255);
 
-        internal void AddHealthBar(ThinkingPlaceable p)
+        internal HealthBar AddHealthBar(ThinkingPlaceable p)
         {
             var healthBar = Instantiate(_healthBarPrefab, transform);
             p.healthBar = healthBar;
             var anchor = p.pType == Placeable.PlaceableType.Unit ? unitAnchorPosition : nonUnitAnchorPosition;
             var color = p.faction == Placeable.Faction.Player ? red : blue;
             healthBar.Initialize(p.transform, anchor, p.hitPoints, color);
+            return healthBar;
         }
 
         void Start()

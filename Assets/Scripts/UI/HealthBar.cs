@@ -10,27 +10,27 @@ namespace UnityRoyale
         private const string HiddenHealthBarStyleClass = "health-bar--hidden";
         
         // Prefab properties
-        [SerializeField] private Vector3 unitAnchorPosition = new Vector3(0f, 0f, 0f);
-        [SerializeField] private Vector3 nonUnitAnchorPosition = new Vector3(0f, 0f, 0f);
+        //[SerializeField] private Vector3 unitAnchorPosition = new Vector3(0f, 0f, 0f);
+        //[SerializeField] private Vector3 nonUnitAnchorPosition = new Vector3(0f, 0f, 0f);
         [SerializeField] private Vector2 worldSize = new Vector2(1f, 1f);
-        [SerializeField] private Color red = new Color32(252, 35, 13, 255);
-        [SerializeField] private Color blue = new Color32(31, 132, 255, 255);
+        //[SerializeField] private Color red = new Color32(252, 35, 13, 255);
+        //[SerializeField] private Color blue = new Color32(31, 132, 255, 255);
 
-        [SerializeField] private bool isHidden = true;
+        //[SerializeField] private bool isHidden = true;
 
-        [HideInInspector] public float originalHealth;
-        [HideInInspector] public float currentHealth;
+        //[HideInInspector] public float originalHealth;
+        //[HideInInspector] public float currentHealth;
         [HideInInspector] public Vector3 anchorPosition;
-        [HideInInspector] public Color barColor;
+        //[HideInInspector] public Color barColor;
         [HideInInspector] public Transform transformToFollow;
 
         [SerializeField] GameObject _followingObject;
         [SerializeField] string _followingObjectName;
         [SerializeField] Vector3 _currentPos;
 
-        private VisualElement bar;
         private VisualElement _healthBarElement;
         
+        /*
         public void Initialize(ThinkingPlaceable p)
         {            
             currentHealth = originalHealth = p.hitPoints;
@@ -40,13 +40,15 @@ namespace UnityRoyale
             _followingObject = p.gameObject;
             _followingObjectName = p.gameObject.name;
         }
+        */
         public void Initialize(Transform p, Vector3 anchor, float hitPoints, Color color)
         {
             viewModel.Initialize(hitPoints, color);
+            
 
-            currentHealth = originalHealth = hitPoints;
+            //currentHealth = originalHealth = hitPoints;
             anchorPosition = anchor;
-            barColor = color;
+            //barColor = color;
             transformToFollow = p;
             _followingObject = p.gameObject;
             _followingObjectName = p.gameObject.name;
@@ -54,30 +56,32 @@ namespace UnityRoyale
 
         void OnEnable()
         {
-            var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
-            bar = rootVisualElement.Q("Bar");
-            _healthBarElement = rootVisualElement.Q("HealthBar");
+            _healthBarElement = view.rootVisualElement.Q("HealthBar");
+            viewModel = ScriptableObject.CreateInstance<HealthBarVM>();
+            _healthBarElement.dataSource = viewModel;
         }
 
         private void Start()
         {
-            viewModel = ScriptableObject.CreateInstance<HealthBarVM>();
-            _healthBarElement.dataSource = viewModel;
+            //viewModel = ScriptableObject.CreateInstance<HealthBarVM>();
+            //_healthBarElement.dataSource = viewModel;
 
-            bar.style.unityBackgroundImageTintColor = barColor;
-            SetHealth(currentHealth);
+            //bar.style.unityBackgroundImageTintColor = barColor;
+            //SetHealth(currentHealth);
         }
 
         public void SetHealth(float newHealth)
         {
-            currentHealth = newHealth;
-            isHidden = newHealth >= originalHealth;
+            //currentHealth = newHealth;
+            viewModel.CurrentHealth.Value = newHealth;
+            //isHidden = newHealth >= originalHealth;
+            viewModel.IsVisible.Value = newHealth < viewModel.OriginalHealth;
 
-            float ratio = newHealth > 0f ? newHealth / originalHealth : 1e-5f;
-            bar.transform.scale = new Vector3(ratio, 1, 1);
+            //float ratio = newHealth > 0f ? newHealth / originalHealth : 1e-5f;
+            //bar.transform.scale = new Vector3(ratio, 1, 1);
             
             // Hide the health bar after the position is set, otherwise it won't hide.
-            _healthBarElement.EnableInClassList(HiddenHealthBarStyleClass, isHidden);
+            //_healthBarElement.EnableInClassList(HiddenHealthBarStyleClass, isHidden);
         }
 
         private void Update()
@@ -89,7 +93,7 @@ namespace UnityRoyale
         //                     2) to leave time for wholeWidget.layout to be refreshed
         private void LateUpdate()
         {
-            if (!isHidden && transformToFollow != null)
+            if (viewModel.IsVisible && transformToFollow != null)
             {
                 MoveAndScaleToWorldPosition(_healthBarElement, transformToFollow.position + anchorPosition, worldSize);
                 //MoveTo(wholeWidget, transformToFollow.position + anchorPosition);

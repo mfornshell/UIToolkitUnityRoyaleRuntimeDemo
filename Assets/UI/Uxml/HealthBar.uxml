@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Uxml/HealthUI.uss?fileID=7433441132597879392&amp;guid=1cf6804ee4c1d5642a78ace4e998967f&amp;type=3#HealthUI" />
-    <HealthBarElement name="HealthBar" data-source="project://database/Assets/GameData/ViewModels/HealthBarVM.asset?fileID=11400000&amp;guid=cd29d51f0f24067499c0be1e925635a0&amp;type=2#HealthBarVM" max-health="10" current-health="46" class="health-bar--container" style="display: flex;">
+    <HealthBarElement name="HealthBar" data-source="project://database/Assets/GameData/ViewModels/HealthBarVM.asset?fileID=11400000&amp;guid=cd29d51f0f24067499c0be1e925635a0&amp;type=2#HealthBarVM" max-health="10" current-health="46" class="health-bar--container" style="display: flex; align-self: flex-start; transform-origin: -10% top;">
         <engine:VisualElement name="BarBG" class="health-bar--background" />
         <engine:VisualElement name="Bar" class="health-bar--filling" style="background-image: none; -unity-background-image-tint-color: rgba(255, 255, 255, 0); overflow: hidden; align-content: center; justify-content: center; align-self: flex-start; align-items: flex-start; scale: 1 1; width: 74%; left: 13%;">
             <engine:VisualElement name="Fill" class="health-bar--container health-bar--container_current" style="width: 100%; height: 100%;">
@@ -10,14 +10,15 @@
                     </Bindings>
                 </engine:VisualElement>
                 <Bindings>
-                    <engine:DataBinding property="style.width" data-source-path="_fillAmount" binding-mode="ToTarget" source-to-ui-converters="Float to Fill" />
+                    <engine:DataBinding property="style.width" data-source-path="_fillAmount" binding-mode="ToTarget" source-to-ui-converters="HealthBar Converters" />
                 </Bindings>
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="Frame" class="health-bar--frame" />
         <Bindings>
-            <engine:DataBinding property="CurrentHealth" data-source-path="_CurrentHealthk__BackingField.Value" binding-mode="TwoWay" />
-            <engine:DataBinding property="MaxHealth" data-source-path="_OriginalHealthk__BackingField._value" binding-mode="ToTarget" />
+            <engine:DataBinding property="MaxHealth" data-source-path="_maxHealth.Value" binding-mode="ToTarget" />
+            <engine:DataBinding property="CurrentHealth" data-source-path="_currentHealth.Value" binding-mode="ToTarget" />
+            <engine:DataBinding property="style.visibility" data-source-path="_isVisible.Value" binding-mode="ToTarget" source-to-ui-converters="HealthBar Converters" />
         </Bindings>
     </HealthBarElement>
 </engine:UXML>

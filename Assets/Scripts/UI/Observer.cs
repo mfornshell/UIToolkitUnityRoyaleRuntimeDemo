@@ -56,7 +56,6 @@ public class BoolObserver : Observer<bool>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     public static void RegisterConverter() => ConverterGroups.RegisterGlobalConverter<Observer<bool>, string>(Convert);
 }
-[Serializable]
 public class FloatObserver : Observer<float>
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

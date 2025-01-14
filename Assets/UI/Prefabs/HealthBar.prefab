@@ -47,16 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewModel: {fileID: 0}
   view: {fileID: 8107097101037019007}
-  unitAnchorPosition: {x: -3, y: 0, z: 0}
-  nonUnitAnchorPosition: {x: 0, y: 0, z: 0}
-  worldSize: {x: 1, y: 0.5}
-  red: {r: 0.9882353, g: 0.13725491, b: 0.050980393, a: 1}
-  blue: {r: 0.12156863, g: 0.5176471, b: 1, a: 1}
+  worldSize: {x: 1, y: 0.4}
   isHidden: 1
-  originalHealth: 0
-  currentHealth: 0
   anchorPosition: {x: 0, y: 0, z: 0}
-  barColor: {r: 0, g: 0, b: 0, a: 0}
   transformToFollow: {fileID: 0}
   _followingObject: {fileID: 0}
   _followingObjectName: 

@@ -50543,7 +50543,7 @@ MonoBehaviour:
     type: 3}
   healthBarPrefab: {fileID: 3908193733436421022, guid: b7e531aaa990f47408e3194092c32e02,
     type: 3}
-  _healthUI: {fileID: 0}
+  _healthUI: {fileID: 8409944646904557773}
   healthBarContainer: {fileID: 1970771257297410527}
 --- !u!1 &5706660949073501972 stripped
 GameObject:
@@ -50709,8 +50709,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBarPrefab: {fileID: 3908193733436421022, guid: b7e531aaa990f47408e3194092c32e02,
     type: 3}
-  unitAnchorPosition: {x: 0, y: 0, z: 0}
-  nonUnitAnchorPosition: {x: 0, y: 0, z: 0}
+  unitAnchorPosition: {x: 0, y: -1, z: 0}
+  nonUnitAnchorPosition: {x: 3, y: 0, z: 0}
   worldSize: {x: 0, y: 0}
   red: {r: 0.9882353, g: 0.13725491, b: 0.050980393, a: 1}
   blue: {r: 0.12156863, g: 0.5176471, b: 1, a: 1}
