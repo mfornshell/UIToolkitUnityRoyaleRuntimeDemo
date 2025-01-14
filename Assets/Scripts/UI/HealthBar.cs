@@ -5,18 +5,17 @@ using UnityEngine.UIElements;
 namespace UnityRoyale
 {
     [RequireComponent(typeof(UIDocument))]
-    public class HealthBar : MonoBehaviour
+    public class HealthBar : UIController<HealthBarVM>
     {
         private const string HiddenHealthBarStyleClass = "health-bar--hidden";
         
         // Prefab properties
-        [SerializeField] private Vector3 unitAnchorPosition = new Vector3(0f, 3f, 0f);
-        [SerializeField] private Vector3 nonUnitAnchorPosition = new Vector3(1.8f, 2f, 0f);
-        [SerializeField] private Vector2 worldSize = new Vector2(1.2f, 0.6f);
+        [SerializeField] private Vector3 unitAnchorPosition = new Vector3(0f, 0f, 0f);
+        [SerializeField] private Vector3 nonUnitAnchorPosition = new Vector3(0f, 0f, 0f);
+        [SerializeField] private Vector2 worldSize = new Vector2(1f, 1f);
         [SerializeField] private Color red = new Color32(252, 35, 13, 255);
         [SerializeField] private Color blue = new Color32(31, 132, 255, 255);
 
-        
         [SerializeField] private bool isHidden = true;
 
         [HideInInspector] public float originalHealth;
@@ -25,8 +24,12 @@ namespace UnityRoyale
         [HideInInspector] public Color barColor;
         [HideInInspector] public Transform transformToFollow;
 
+        [SerializeField] GameObject _followingObject;
+        [SerializeField] string _followingObjectName;
+        [SerializeField] Vector3 _currentPos;
+
         private VisualElement bar;
-        private VisualElement wholeWidget;
+        private VisualElement _healthBarElement;
         
         public void Initialize(ThinkingPlaceable p)
         {            
@@ -34,17 +37,33 @@ namespace UnityRoyale
             anchorPosition = p.pType == Placeable.PlaceableType.Unit ? unitAnchorPosition : nonUnitAnchorPosition;
             barColor = p.faction == Placeable.Faction.Player ? red : blue;
             transformToFollow = p.transform;
+            _followingObject = p.gameObject;
+            _followingObjectName = p.gameObject.name;
+        }
+        public void Initialize(Transform p, Vector3 anchor, float hitPoints, Color color)
+        {
+            viewModel.Initialize(hitPoints, color);
+
+            currentHealth = originalHealth = hitPoints;
+            anchorPosition = anchor;
+            barColor = color;
+            transformToFollow = p;
+            _followingObject = p.gameObject;
+            _followingObjectName = p.gameObject.name;
         }
 
         void OnEnable()
         {
             var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
             bar = rootVisualElement.Q("Bar");
-            wholeWidget = rootVisualElement.Q("HealthBar");
+            _healthBarElement = rootVisualElement.Q("HealthBar");
         }
 
         private void Start()
         {
+            viewModel = ScriptableObject.CreateInstance<HealthBarVM>();
+            _healthBarElement.dataSource = viewModel;
+
             bar.style.unityBackgroundImageTintColor = barColor;
             SetHealth(currentHealth);
         }
@@ -58,12 +77,12 @@ namespace UnityRoyale
             bar.transform.scale = new Vector3(ratio, 1, 1);
             
             // Hide the health bar after the position is set, otherwise it won't hide.
-            wholeWidget.EnableInClassList(HiddenHealthBarStyleClass, isHidden);
+            _healthBarElement.EnableInClassList(HiddenHealthBarStyleClass, isHidden);
         }
 
         private void Update()
         {
-            wholeWidget.EnableInClassList(HiddenHealthBarStyleClass, isHidden);
+            //wholeWidget.EnableInClassList(HiddenHealthBarStyleClass, isHidden);
         }
 
         // Wait for LateUpdate 1) to allow tracked object to move and
@@ -72,8 +91,22 @@ namespace UnityRoyale
         {
             if (!isHidden && transformToFollow != null)
             {
-                MoveAndScaleToWorldPosition(wholeWidget, transformToFollow.position + anchorPosition, worldSize);
+                MoveAndScaleToWorldPosition(_healthBarElement, transformToFollow.position + anchorPosition, worldSize);
+                //MoveTo(wholeWidget, transformToFollow.position + anchorPosition);
+                _currentPos = _healthBarElement.transform.position;
             }
+        }
+
+        void MoveTo(VisualElement widget, Vector3 worldPos)
+        {
+            var pos = RuntimePanelUtils.CameraTransformWorldToPanel(widget.panel, worldPos, Camera.main);
+
+            var layoutSize = widget.layout.size;
+
+            var scale = pos / layoutSize;
+
+            widget.transform.position = pos;
+            widget.transform.scale = Vector3.one * scale;
         }
 
         static void MoveAndScaleToWorldPosition(VisualElement element, Vector3 worldPosition, Vector2 worldSize)

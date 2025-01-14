@@ -1,8 +1,3 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement name="HealthBar" class="health-bar--container">
-        <Style src="HealthUI.uss" />
-        <ui:VisualElement name="BarBG" class="health-bar--background" />
-        <ui:VisualElement name="Bar" class="health-bar--filling" />
-        <ui:VisualElement name="Frame" class="health-bar--frame" />
-    </ui:VisualElement>
+    <Style src="project://database/Assets/UI/Uxml/HealthUI.uss?fileID=7433441132597879392&amp;guid=1cf6804ee4c1d5642a78ace4e998967f&amp;type=3#HealthUI" />
 </ui:UXML>

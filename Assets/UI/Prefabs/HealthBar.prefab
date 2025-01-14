@@ -45,9 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0bce6599064510a11b5f606674f065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAnchorPosition: {x: 0, y: 3, z: 0}
-  nonUnitAnchorPosition: {x: 1.8, y: 2, z: 0}
-  worldSize: {x: 1.2, y: 0.6}
+  viewModel: {fileID: 0}
+  view: {fileID: 8107097101037019007}
+  unitAnchorPosition: {x: -3, y: 0, z: 0}
+  nonUnitAnchorPosition: {x: 0, y: 0, z: 0}
+  worldSize: {x: 1, y: 0.5}
   red: {r: 0.9882353, g: 0.13725491, b: 0.050980393, a: 1}
   blue: {r: 0.12156863, g: 0.5176471, b: 1, a: 1}
   isHidden: 1
@@ -56,6 +58,9 @@ MonoBehaviour:
   anchorPosition: {x: 0, y: 0, z: 0}
   barColor: {r: 0, g: 0, b: 0, a: 0}
   transformToFollow: {fileID: 0}
+  _followingObject: {fileID: 0}
+  _followingObjectName: 
+  _currentPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8107097101037019007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: 2e391bb79f9cded4ca6e22825b3544be, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 1d2714632fce2384cbd0bfd80058faea,
+  sourceAsset: {fileID: 9197481963319205126, guid: f607998fc38f2c54ea46ee97c53d6b06,
     type: 3}
   m_SortingOrder: 0
   m_WorldSpaceSizeMode: 1

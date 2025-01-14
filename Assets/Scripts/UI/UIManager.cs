@@ -7,7 +7,8 @@ namespace UnityRoyale
     {
         [SerializeField] private GameScreen gameScreen = default;
         [SerializeField] private EndScreen endScreenPrefab = default;
-        [SerializeField] private HealthBar healthBarPrefab = default;
+        [SerializeField] private HealthBar healthBarPrefab;
+        [SerializeField] HealthUIManager _healthUI;
         [SerializeField] private Transform healthBarContainer = default;
 
         public void AddHealthUI(ThinkingPlaceable p)
@@ -15,6 +16,8 @@ namespace UnityRoyale
             var healthBar = Instantiate(healthBarPrefab, healthBarContainer);
             p.healthBar = healthBar;
             healthBar.Initialize(p);
+
+            _healthUI.AddHealthBar(p);
         }
 
         public void RemoveHealthUI(ThinkingPlaceable p)

@@ -50543,6 +50543,7 @@ MonoBehaviour:
     type: 3}
   healthBarPrefab: {fileID: 3908193733436421022, guid: b7e531aaa990f47408e3194092c32e02,
     type: 3}
+  _healthUI: {fileID: 0}
   healthBarContainer: {fileID: 1970771257297410527}
 --- !u!1 &5706660949073501972 stripped
 GameObject:
@@ -50665,38 +50666,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1970771257297410527}
-  - component: {fileID: 8409944646904557771}
+  - component: {fileID: 8409944646904557773}
   - component: {fileID: 8409944646904557772}
   m_Layer: 0
-  m_Name: HealthBarContainer
+  m_Name: HealthUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8409944646904557771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8409944646904557770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0bce6599064510a11b5f606674f065, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitAnchorPosition: {x: 0, y: 3, z: 0}
-  nonUnitAnchorPosition: {x: 1.8, y: 2, z: 0}
-  worldSize: {x: 1.2, y: 0.6}
-  red: {r: 0.9882353, g: 0.13725491, b: 0.050980393, a: 1}
-  blue: {r: 0.12156863, g: 0.5176471, b: 1, a: 1}
-  isHidden: 1
-  originalHealth: 0
-  currentHealth: 0
-  anchorPosition: {x: 0, y: 0, z: 0}
-  barColor: {r: 0, g: 0, b: 0, a: 0}
-  transformToFollow: {fileID: 0}
 --- !u!114 &8409944646904557772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50717,6 +50695,25 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &8409944646904557773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409944646904557770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a298533ca40983e4095bb3eacbe51e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBarPrefab: {fileID: 3908193733436421022, guid: b7e531aaa990f47408e3194092c32e02,
+    type: 3}
+  unitAnchorPosition: {x: 0, y: 0, z: 0}
+  nonUnitAnchorPosition: {x: 0, y: 0, z: 0}
+  worldSize: {x: 0, y: 0}
+  red: {r: 0.9882353, g: 0.13725491, b: 0.050980393, a: 1}
+  blue: {r: 0.12156863, g: 0.5176471, b: 1, a: 1}
 --- !u!1 &9031842704942719471
 GameObject:
   m_ObjectHideFlags: 0

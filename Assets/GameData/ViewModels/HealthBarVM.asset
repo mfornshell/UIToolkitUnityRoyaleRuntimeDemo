@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e9de2b9e99df046bf1901788e5ee53, type: 3}
+  m_Name: HealthBarVM
+  m_EditorClassIdentifier: 
+  _fillAmount: 5.31
+  <OriginalHealth>k__BackingField:
+    _value: 100
+  <CurrentHealth>k__BackingField:
+    _value: 5.31
+  <BarColor>k__BackingField: {r: 1, g: 0.18251067, b: 0, a: 1}
