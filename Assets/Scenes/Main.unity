@@ -50541,10 +50541,7 @@ MonoBehaviour:
   gameScreen: {fileID: 8174836852055305275}
   endScreenPrefab: {fileID: 8973559796752844720, guid: 3d7b172fb9efe9a438062b06bedcf32d,
     type: 3}
-  healthBarPrefab: {fileID: 3908193733436421022, guid: b7e531aaa990f47408e3194092c32e02,
-    type: 3}
   _healthUI: {fileID: 8409944646904557773}
-  healthBarContainer: {fileID: 1970771257297410527}
 --- !u!1 &5706660949073501972 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5706660947718540815, guid: dd280e7a9315109438464a3cda98bd43,
@@ -50707,7 +50704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a298533ca40983e4095bb3eacbe51e98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarPrefab: {fileID: 3908193733436421022, guid: b7e531aaa990f47408e3194092c32e02,
+  _healthBarPrefab: {fileID: 320652096397077528, guid: b7e531aaa990f47408e3194092c32e02,
     type: 3}
   unitAnchorPosition: {x: 0, y: -1, z: 0}
   nonUnitAnchorPosition: {x: 3, y: 0, z: 0}

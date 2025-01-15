@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e9de2b9e99df046bf1901788e5ee53, type: 3}
   m_Name: HealthBarVM
   m_EditorClassIdentifier: 
-  _fillAmount: 59.484344
+  _fillAmount: 50.5
   _maxHealth:
-    _value: 108.6
+    _value: 120
   _currentHealth:
-    _value: 64.6
+    _value: 60.6
   _isVisible:
     _value: 1
   <BarColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}

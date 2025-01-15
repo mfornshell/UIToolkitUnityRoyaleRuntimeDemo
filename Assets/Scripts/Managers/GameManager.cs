@@ -156,7 +156,7 @@ namespace UnityRoyale
                     if(currProjectile.target.state != ThinkingPlaceable.States.Dead) //target might be dead already as this projectile is flying
                     {
                         float newHP = currProjectile.target.SufferDamage(currProjectile.damage);
-                        currProjectile.target.healthBar.SetHealth(newHP);
+                        //currProjectile.target.healthBar.OnHealthChanged(newHP);
                     }
                     Destroy(currProjectile.gameObject);
                     allProjectiles.RemoveAt(prjN);
@@ -285,7 +285,7 @@ namespace UnityRoyale
             if(p.target.state != ThinkingPlaceable.States.Dead)
             {
                 float newHealth = p.target.SufferDamage(p.damage);
-                p.target.healthBar.SetHealth(newHealth);
+                //p.target.healthBar.OnHealthChanged(newHealth);
             }
         }
 
@@ -305,7 +305,7 @@ namespace UnityRoyale
                 {
                     thkPl.Stop();
                     thkPl.transform.LookAt(c.transform.position);
-                    UIManager.RemoveHealthUI(thkPl);
+                    //UIManager.RemoveHealthUI(thkPl);
                 }
             }
 
@@ -328,7 +328,7 @@ namespace UnityRoyale
                     RemovePlaceableFromList(u);
                     u.OnDealDamage -= OnPlaceableDealtDamage;
                     u.OnProjectileFired -= OnProjectileFired;
-                    UIManager.RemoveHealthUI(u);
+                    //UIManager.RemoveHealthUI(u);
                     StartCoroutine(Dispose(u));
                     break;
 
@@ -336,7 +336,7 @@ namespace UnityRoyale
                 case Placeable.PlaceableType.Castle:
                     Building b = (Building)p;
                     RemovePlaceableFromList(b);
-                    UIManager.RemoveHealthUI(b);
+                    //UIManager.RemoveHealthUI(b);
                     b.OnDealDamage -= OnPlaceableDealtDamage;
                     b.OnProjectileFired -= OnProjectileFired;
                     StartCoroutine(RebuildNavmesh()); //need to fix for normal buildings

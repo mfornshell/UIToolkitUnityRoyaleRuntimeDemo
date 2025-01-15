@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,7 +27,7 @@ namespace UnityRoyale
         }
 
         [HideInInspector] public ThinkingPlaceable target;
-        [HideInInspector] public HealthBar healthBar;
+        //[HideInInspector] public HealthBar healthBar;
 
         [HideInInspector] public float hitPoints;
         [HideInInspector] public float attackRange;
@@ -45,6 +46,7 @@ namespace UnityRoyale
 		private Projectile projectile;
 
 		public UnityAction<ThinkingPlaceable> OnDealDamage, OnProjectileFired;
+        public event Action<float> HealthChanged;
 
         public virtual void SetTarget(ThinkingPlaceable t)
         {
@@ -97,13 +99,12 @@ namespace UnityRoyale
         public float SufferDamage(float amount)
         {
             hitPoints -= amount;
-            //Debug.Log("Suffering damage, new health: " + hitPoints, gameObject);
-            if(state != States.Dead
-				&& hitPoints <= 0f)
+            HealthChanged?.Invoke(hitPoints);
+
+            if (state != States.Dead && hitPoints <= 0f)
             {
                 Die();
             }
-
             return hitPoints;
         }
 

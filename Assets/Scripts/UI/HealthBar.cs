@@ -8,7 +8,9 @@ namespace UnityRoyale
     public class HealthBar : UIController<HealthBarVM>
     {
         private const string HiddenHealthBarStyleClass = "health-bar--hidden";
-        
+
+        ThinkingPlaceable _healthModelPlaceable; // TODO : replace this with a proper healthModel
+
         // Prefab properties
         //[SerializeField] private Vector3 unitAnchorPosition = new Vector3(0f, 0f, 0f);
         //[SerializeField] private Vector3 nonUnitAnchorPosition = new Vector3(0f, 0f, 0f);
@@ -41,15 +43,19 @@ namespace UnityRoyale
             _followingObjectName = p.gameObject.name;
         }
         */
-        public void Initialize(Transform p, Vector3 anchor, float hitPoints, Color color)
+        public void Initialize(ThinkingPlaceable p, Vector3 anchor, float hitPoints, Color color)
         {
             viewModel.Initialize(hitPoints, color);
+            _healthModelPlaceable = p;
+            _healthModelPlaceable.HealthChanged += viewModel.CurrentHealth;
+            _healthModelPlaceable.OnDie += Remove;
+            viewModel.CurrentHealth.OnValueChanged += OnHealthChanged;
             
 
             //currentHealth = originalHealth = hitPoints;
             anchorPosition = anchor;
             //barColor = color;
-            transformToFollow = p;
+            transformToFollow = p.transform;
             _followingObject = p.gameObject;
             _followingObjectName = p.gameObject.name;
         }
@@ -70,10 +76,10 @@ namespace UnityRoyale
             //SetHealth(currentHealth);
         }
 
-        public void SetHealth(float newHealth)
+        void OnHealthChanged(float newHealth)
         {
             //currentHealth = newHealth;
-            viewModel.CurrentHealth.Value = newHealth;
+            //viewModel.CurrentHealth.Value = newHealth;
             //isHidden = newHealth >= originalHealth;
             viewModel.IsVisible.Value = newHealth < viewModel.OriginalHealth;
 
@@ -123,6 +129,21 @@ namespace UnityRoyale
 
             element.transform.position = rect.position;
             element.transform.scale = new Vector3(scale.x, scale.y, 1);
+        }
+
+        void Remove(Placeable _)
+        {
+            Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (_healthModelPlaceable != null)
+            {
+                _healthModelPlaceable.HealthChanged -= viewModel.CurrentHealth;
+                _healthModelPlaceable.OnDie -= Remove;
+            }
+            viewModel.CurrentHealth.OnValueChanged -= OnHealthChanged;
         }
     }
 }

@@ -11,20 +11,7 @@ namespace UnityRoyale
 
         public void AddHealthUI(ThinkingPlaceable p)
         {
-            //var healthBar = Instantiate(healthBarPrefab, healthBarContainer);
-            //p.healthBar = healthBar;
-            //healthBar.Initialize(p);
-
-            var healthBar = _healthUI.AddHealthBar(p);
-            p.healthBar = healthBar;
-        }
-
-        public void RemoveHealthUI(ThinkingPlaceable p)
-        {
-            if (p.healthBar)
-            {
-                Destroy(p.healthBar.gameObject);
-            }
+            _healthUI.AddHealthBar(p);
         }
 
         public VisualElement GetCardPanelRoot()
