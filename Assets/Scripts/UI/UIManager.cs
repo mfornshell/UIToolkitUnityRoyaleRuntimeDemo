@@ -14,6 +14,11 @@ namespace UnityRoyale
             _healthUI.AddHealthBar(p);
         }
 
+        public void DisableHealthUI()
+        {
+            _healthUI.ResetUI();
+        }
+
         public VisualElement GetCardPanelRoot()
         {
             return gameScreen.GetCardPanelRoot();

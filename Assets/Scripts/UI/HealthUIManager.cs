@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +9,7 @@ namespace UnityRoyale
     {
         private const string HiddenHealthBarStyleClass = "health-bar--hidden";
 
+        [SerializeField] UIDocument _document;
         [SerializeField] HealthBarController _healthBarPrefab;
         [Space]
         [SerializeField] Vector3 unitAnchorPosition;
@@ -19,11 +21,18 @@ namespace UnityRoyale
         internal void AddHealthBar(ThinkingPlaceable p)
         {
             var healthBar = Instantiate(_healthBarPrefab, transform);
-            //p.healthBar = healthBar;
-            //p.HealthChanged += healthBar.OnHealthChanged;
+            healthBar.SetupVisualElement(_document);
+
             var anchor = p.pType == Placeable.PlaceableType.Unit ? unitAnchorPosition : nonUnitAnchorPosition;
             var color = p.faction == Placeable.Faction.Player ? red : blue;
+
             healthBar.Initialize(p, anchor, p.hitPoints, color);
+        }
+
+        internal void ResetUI()
+        {
+            _document.gameObject.SetActive(false);
+            _document.gameObject.SetActive(true);
         }
 
         void Start()

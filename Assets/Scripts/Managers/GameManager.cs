@@ -292,6 +292,7 @@ namespace UnityRoyale
         private void OnCastleDead(Placeable c)
         {
             loserFaction = c.faction;
+            UIManager.DisableHealthUI();
             cinematicsManager.PlayCollapseCutscene(c.faction);
             c.OnDie -= OnCastleDead;
             gameOver = true; //stops the thinking loop

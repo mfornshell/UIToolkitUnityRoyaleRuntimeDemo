@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5333746804131557278}
   - component: {fileID: 320652096397077528}
-  - component: {fileID: 8107097101037019007}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -46,27 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewModel: {fileID: 0}
-  view: {fileID: 8107097101037019007}
+  view: {fileID: 0}
+  _healthBarAsset: {fileID: 9197481963319205126, guid: f607998fc38f2c54ea46ee97c53d6b06,
+    type: 3}
   worldSize: {x: 1, y: 0.4}
   anchorPosition: {x: 0, y: 0, z: 0}
   transformToFollow: {fileID: 0}
---- !u!114 &8107097101037019007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287572586156800699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 2e391bb79f9cded4ca6e22825b3544be, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: f607998fc38f2c54ea46ee97c53d6b06,
-    type: 3}
-  m_SortingOrder: 0
-  m_WorldSpaceSizeMode: 1
-  m_WorldSpaceWidth: 1920
-  m_WorldSpaceHeight: 1080

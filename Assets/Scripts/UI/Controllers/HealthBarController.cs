@@ -8,6 +8,8 @@ namespace UnityRoyale
         ThinkingPlaceable _healthModelPlaceable; // TODO : replace this with a proper healthModel
         VisualElement _healthBarElement;
 
+        [SerializeField] VisualTreeAsset _healthBarAsset;
+
         [SerializeField] private Vector2 worldSize = new Vector2(1f, 1f);
 
         [SerializeField] Vector3 anchorPosition;
@@ -27,10 +29,17 @@ namespace UnityRoyale
             transformToFollow = p.transform;
         }
 
+        public void SetupVisualElement(UIDocument uiDocument)
+        {
+            view = uiDocument;
+            view.rootVisualElement.Add(_healthBarElement);
+        }
+
         void OnEnable()
         {
-            _healthBarElement = view.rootVisualElement.Q("HealthBar");
             viewModel = ScriptableObject.CreateInstance<HealthBarVM>();
+            var tree = _healthBarAsset.Instantiate();
+            _healthBarElement = tree.Q<HealthBarElement>();
             _healthBarElement.dataSource = viewModel;
         }
 
@@ -46,6 +55,7 @@ namespace UnityRoyale
 
         static void MoveAndScaleToWorldPosition(VisualElement element, Vector3 worldPosition, Vector2 worldSize)
         {
+            if (element.panel == null) return;
             Rect rect = RuntimePanelUtils.CameraTransformWorldToPanelRect(element.panel, worldPosition, worldSize, Camera.main);
             Vector2 layoutSize = element.layout.size;
 
@@ -66,6 +76,7 @@ namespace UnityRoyale
                 _healthModelPlaceable.OnDie -= Remove;
             }
             viewModel.CurrentHealth.OnValueChanged -= OnHealthChanged;
+            _healthBarElement.RemoveFromHierarchy();
         }
     }
 }
