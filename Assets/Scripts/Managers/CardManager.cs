@@ -10,11 +10,12 @@ namespace UnityRoyale
 {
     public class CardManager : MonoBehaviour
     {
+        GameScreen _gameScreen;
+
         // Prefab properties
         [SerializeField] private Camera mainCamera = default;
         [SerializeField] private LayerMask playingFieldMask = default;
         [SerializeField] private VisualTreeAsset visualTreeCard = default;
-        [SerializeField] private UIManager uiManager = default;
         [SerializeField] private DeckData playersDeck = default;
         [SerializeField] private MeshRenderer forbiddenAreaRenderer = default;
 		
@@ -32,6 +33,11 @@ namespace UnityRoyale
             cards = new CardElement[3]; //3 is the length of the dashboard
         }
 
+        private void Start()
+        {
+            _gameScreen = UIManager.Instance.GameScreen;
+        }
+
         public void LoadDeck()
         {
             DeckLoader newDeckLoaderComp = gameObject.AddComponent<DeckLoader>();
@@ -44,6 +50,7 @@ namespace UnityRoyale
         {
             Debug.Log("Player's deck loaded");
 
+            _gameScreen.ShowGameScreen();
             //setup initial cards
             StartCoroutine(AddCardToDeck(.1f));
             for(int i=0; i< cardCount; i++)
@@ -55,14 +62,16 @@ namespace UnityRoyale
 
         private VisualElement GetBackupContainer()
         {
-            var root = uiManager.GetCardPanelRoot();
-            return root.Q<VisualElement>("backup");
+            //var root = _gameScreen.GetCardPanelRoot();
+            //return root.Q<VisualElement>("backup");
+            return _gameScreen.BackupPanel;
         }
 
         private VisualElement GetActiveContainer()
         {
-            var root = uiManager.GetCardPanelRoot();
-            return root.Q<VisualElement>("active");
+            //var root = _gameScreen.GetCardPanelRoot();
+            //return root.Q<VisualElement>("active");
+            return _gameScreen.ActivePanel;
         }
 
         //moves the preview card from the deck to the active card dashboard

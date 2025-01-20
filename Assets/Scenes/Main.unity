@@ -50436,7 +50436,6 @@ MonoBehaviour:
     m_Bits: 1024
   visualTreeCard: {fileID: 9197481963319205126, guid: 05ae1745d4bd5474e966b4103ad18531,
     type: 3}
-  uiManager: {fileID: 5496569997968234931}
   playersDeck: {fileID: 11400000, guid: a7dabc74b29d3475291fbb95a8ab8b70, type: 2}
   forbiddenAreaRenderer: {fileID: 251283499}
 --- !u!4 &1970771257297410527
@@ -50626,6 +50625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ffe060942f47a88102f05aa1c3babb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewModel: {fileID: 11400000, guid: 9c5d47435d0be824999dbcc4a93948d7, type: 2}
+  view: {fileID: 9031842704942719472}
 --- !u!1001 &8356289988212844313
 PrefabInstance:
   m_ObjectHideFlags: 0

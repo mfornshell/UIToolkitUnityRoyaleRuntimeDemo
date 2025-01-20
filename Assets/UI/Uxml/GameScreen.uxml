@@ -1,9 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement name="screen" class="screen" style="justify-content: flex-end;">
-        <Style src="GameScreen.uss" />
+    <Style src="project://database/Assets/UI/Uxml/GameScreen.uss?fileID=7433441132597879392&amp;guid=12ddb0dd7448f2f44833588478901229&amp;type=3#GameScreen" />
+    <ui:VisualElement name="screen" data-source="project://database/Assets/GameData/ViewModels/GameScreenVM.asset?fileID=11400000&amp;guid=9c5d47435d0be824999dbcc4a93948d7&amp;type=2#GameScreenVM" class="screen" style="justify-content: flex-end;">
         <ui:VisualElement name="cardpanel" class="card-panel">
             <ui:VisualElement name="backup" class="card-back-slot" />
             <ui:VisualElement name="active" class="play-area-container" />
+            <Bindings>
+                <ui:DataBinding property="style.display" data-source-path="IsVisible.Value" binding-mode="ToTarget" source-to-ui-converters="Bool to DisplayStyle" />
+            </Bindings>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
