@@ -7,6 +7,7 @@ namespace UnityRoyale
     {
         ThinkingPlaceable _healthModelPlaceable; // TODO : replace this with a proper healthModel
         VisualElement _healthBarElement;
+        Camera _camera;
 
         [SerializeField] VisualTreeAsset _healthBarAsset;
 
@@ -27,6 +28,7 @@ namespace UnityRoyale
 
             anchorPosition = anchor;
             transformToFollow = p.transform;
+            _camera = Camera.main;
         }
 
         public void SetupVisualElement(UIDocument uiDocument)
@@ -49,21 +51,21 @@ namespace UnityRoyale
         {
             if (viewModel.IsVisible && transformToFollow != null)
             {
-                MoveAndScaleToWorldPosition(_healthBarElement, transformToFollow.position + anchorPosition, worldSize);
+                SetPositionAndScale(transformToFollow.position + anchorPosition);
             }
         }
 
-        static void MoveAndScaleToWorldPosition(VisualElement element, Vector3 worldPosition, Vector2 worldSize)
+        void SetPositionAndScale(Vector3 worldPos)
         {
-            if (element.panel == null) return;
-            Rect rect = RuntimePanelUtils.CameraTransformWorldToPanelRect(element.panel, worldPosition, worldSize, Camera.main);
-            Vector2 layoutSize = element.layout.size;
+            if (_healthBarElement?.panel == null) return;
 
-            // Don't set scale to 0 or a negative number.
-            Vector2 scale = layoutSize.x > 0 && layoutSize.y > 0 ? rect.size / layoutSize : Vector2.one * 1e-5f;
+            var rect = RuntimePanelUtils.CameraTransformWorldToPanelRect(
+                _healthBarElement.panel, worldPos, worldSize, _camera);
 
-            element.transform.position = rect.position;
-            element.transform.scale = new Vector3(scale.x, scale.y, 1);
+            _healthBarElement.style.translate = new Translate(rect.position.x, rect.position.y);
+
+            var scale = rect.size / _healthBarElement.layout.size;
+            _healthBarElement.style.scale = new Scale(scale);
         }
 
         void Remove(Placeable _) => Destroy(gameObject);
