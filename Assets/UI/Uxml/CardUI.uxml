@@ -1,11 +1,23 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <UnityRoyale.CardElement class="card">
-        <Style src="CardUI.uss" />
-        <ui:VisualElement name="image" class="image" style="flex-grow: 1;" />
+    <Style src="project://database/Assets/UI/Uxml/CardUI.uss?fileID=7433441132597879392&amp;guid=e187f9b5d1d702843a3026bd62ac6686&amp;type=3#CardUI" />
+    <UnityRoyale.CardElement data-source="project://database/Assets/GameData/ViewModels/CardVM.asset?fileID=11400000&amp;guid=4ee2d258da59b884ea27f4cf64146406&amp;type=2#CardVM" usage-hints="DynamicTransform" class="card">
+        <ui:VisualElement name="image" class="image" style="flex-grow: 1;">
+            <Bindings>
+                <ui:DataBinding property="style.backgroundImage" data-source-path="_cardArt" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:VisualElement>
         <ui:VisualElement name="frame" class="frame" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
             <ui:VisualElement name="stats" class="stats">
-                <ui:Label text="12" name="attack-badge" class="badge attack-badge" />
-                <ui:Label text="42" name="health-badge" class="badge health-badge" />
+                <ui:Label text="12" name="attack-badge" class="badge attack-badge">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="_damage.Value" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label text="42" name="health-badge" class="badge health-badge">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="_health.Value" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
             </ui:VisualElement>
         </ui:VisualElement>
     </UnityRoyale.CardElement>

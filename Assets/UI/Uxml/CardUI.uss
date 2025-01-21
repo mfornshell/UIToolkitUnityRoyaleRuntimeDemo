@@ -1,12 +1,12 @@
 .card {
     width: 104px;
     height: 115px;
-    -unity-font: url('/Assets/UI/Fonts/LilitaOne-Regular.ttf');
+    -unity-font: url("project://database/Assets/UI/Fonts/LilitaOne-Regular.ttf?fileID=12800000&guid=631d6eefd87fb42edb67943e6e63f758&type=3#LilitaOne-Regular");
     position: absolute;
 }
 
 .frame {
-    background-image: url('/Assets/UI/Elements/ui_card_front.png');
+    background-image: url("project://database/Assets/UI/Elements/ui_card_front.png?fileID=21300000&guid=db03ec25342aa4419870d567b8e458de&type=3#ui_card_front");
     flex-grow: 1;
     overflow: hidden;
     -unity-background-scale-mode: scale-to-fit;
@@ -23,21 +23,20 @@
     width: 42px;
     height: 33px;
     -unity-text-align: middle-center;
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 .attack-badge {
-    background-image: url('/Assets/UI/Elements/icon_dmg.png');
+    background-image: url("project://database/Assets/UI/Elements/icon_dmg.png?fileID=21300000&guid=be426fc39c643480390453ea6c021e66&type=3#icon_dmg");
     padding-left: 4px;
     padding-top: 5px;
 }
 
 .health-badge {
-    background-image: url('/Assets/UI/Elements/icon_health.png');
+    background-image: url("project://database/Assets/UI/Elements/icon_health.png?fileID=21300000&guid=04aeab86f413d4d3fa3597608a4975b4&type=3#icon_health");
 }
 
 .image {
-    background-image: url('/Assets/UI/CardArt/Archers.png');
     margin-left: 11%;
     margin-right: 11%;
     margin-top: 11%;

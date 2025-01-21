@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UIElements.Experimental;
 
@@ -59,5 +60,19 @@ namespace UnityRoyale
         {
             RemoveFromHierarchy();
         }
+
+#if UNITY_EDITOR
+        [InitializeOnLoadMethod]
+#else
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+#endif
+        public static void RegisterConverters()
+        {
+            var group = new ConverterGroup("Sprite to BackgroundImage");
+            group.AddConverter((ref Sprite b) => b ? new StyleEnum<DisplayStyle>(DisplayStyle.Flex)
+                                                 : new StyleEnum<DisplayStyle>(DisplayStyle.None));
+            //ConverterGroups.RegisterConverterGroup(group);
+        }
+
     }
 }

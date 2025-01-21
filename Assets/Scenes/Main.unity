@@ -50437,6 +50437,8 @@ MonoBehaviour:
   visualTreeCard: {fileID: 9197481963319205126, guid: 05ae1745d4bd5474e966b4103ad18531,
     type: 3}
   playersDeck: {fileID: 11400000, guid: a7dabc74b29d3475291fbb95a8ab8b70, type: 2}
+  _cardPrefab: {fileID: 1854446877900879165, guid: 595efaf7858258d46927b612b95485d1,
+    type: 3}
   forbiddenAreaRenderer: {fileID: 251283499}
 --- !u!4 &1970771257297410527
 Transform:

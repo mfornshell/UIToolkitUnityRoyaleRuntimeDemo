@@ -15,8 +15,9 @@ namespace UnityRoyale
         // Prefab properties
         [SerializeField] private Camera mainCamera = default;
         [SerializeField] private LayerMask playingFieldMask = default;
-        [SerializeField] private VisualTreeAsset visualTreeCard = default;
+        //[SerializeField] private VisualTreeAsset visualTreeCard = default;
         [SerializeField] private DeckData playersDeck = default;
+        [SerializeField] CardUI _cardPrefab;
         [SerializeField] private MeshRenderer forbiddenAreaRenderer = default;
 		
         public UnityAction<CardData, Vector3, Placeable.Faction> OnCardUsed;
@@ -105,14 +106,18 @@ namespace UnityRoyale
             yield return new WaitForSecondsRealtime(delay);
 
             //create new card
-            var tree = visualTreeCard.CloneTree();
-            var card = tree.Q<CardElement>();
-            GetBackupContainer().Add(card);
 
-            card.Init(playersDeck.GetNextCardFromDeck());
-            card.Scale(0.1f);
-            card.AnimatedScale(0.7f, 0.2f);
-            card.MoveTo(new Vector2(10, 10));
+            var card = Instantiate(_cardPrefab, _gameScreen.transform);
+            card.Initialize(playersDeck.GetNextCardFromDeck(), _gameScreen.BackupPanel);
+
+            //var tree = visualTreeCard.CloneTree();
+            //var cardElement = tree.Q<CardElement>();
+            //GetBackupContainer().Add(cardElement);
+            var cardElement = card.CardElement;
+            //cardElement.Init(playersDeck.GetNextCardFromDeck());
+            cardElement.Scale(0.1f);
+            cardElement.AnimatedScale(0.7f, 0.2f);
+            cardElement.MoveTo(new Vector2(10, 10));
         }
 
         private int draggedCardId = -1;
