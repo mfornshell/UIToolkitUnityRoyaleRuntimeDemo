@@ -6,8 +6,8 @@
     flex-direction: row;
 }
 
-.card-back-slot {
-    background-image: url('/Assets/UI/Elements/ui_card_back.png');
+.deck-pile {
+    background-image: url("project://database/Assets/UI/Elements/ui_card_back.png?fileID=21300000&guid=eba88828bd8384bc080f3f3a41296787&type=3#ui_card_back");
     -unity-background-scale-mode: scale-to-fit;
     width: 100px;
     margin-left: 10px;
@@ -21,7 +21,7 @@
     flex-direction: row;
     -unity-background-scale-mode: stretch-to-fill;
     background-color: rgba(255, 255, 255, 0);
-    background-image: url('/Assets/UI/Elements/ui_stone_slab.png');
+    background-image: url("project://database/Assets/UI/Elements/ui_stone_slab.png?fileID=21300000&guid=8a344523dd519457d830f1b80b69ea4d&type=3#ui_stone_slab");
     flex-grow: 1;
     margin-left: 0;
     margin-right: 12px;

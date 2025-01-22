@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/UI/Uxml/CardUI.uss?fileID=7433441132597879392&amp;guid=e187f9b5d1d702843a3026bd62ac6686&amp;type=3#CardUI" />
     <ui:VisualElement name="screen" data-source="project://database/Assets/GameData/ViewModels/GameScreenVM.asset?fileID=11400000&amp;guid=9c5d47435d0be824999dbcc4a93948d7&amp;type=2#GameScreenVM" class="screen" style="justify-content: flex-end;">
         <ui:VisualElement name="cardpanel" class="card-panel">
-            <ui:VisualElement name="backup" class="card-back-slot" />
+            <DeckPileElement name="deckpile" class="deck-pile" />
             <ui:VisualElement name="active" class="play-area-container" />
             <Bindings>
                 <ui:DataBinding property="style.display" data-source-path="IsVisible.Value" binding-mode="ToTarget" source-to-ui-converters="Bool to DisplayStyle" />

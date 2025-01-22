@@ -8,29 +8,45 @@ namespace UnityRoyale
     {
         [SerializeField] VisualTreeAsset _cardAsset;
 
+        Action<int> IndexChanged;
+
         CardElement _cardElement;
+        int _index;
 
         public CardElement CardElement => _cardElement; //temp
 
-        internal void Initialize(CardData cardData, VisualElement backupPanel)
+        public int Index
+        {
+            get => _index; set
+            {
+                _index = value; 
+                IndexChanged?.Invoke(_index);
+            } 
+        }
+
+        internal void Initialize(CardData cardData)
         {
             _cardElement = _cardAsset.Instantiate().Q<CardElement>();
-            backupPanel.Add(_cardElement);
             _cardElement.dataSource = viewModel;
+            _cardElement.Init(cardData);
 
             viewModel.Initialize(cardData);
-
-            _cardElement.Init(cardData);
         }
 
         private void OnEnable()
         {
             viewModel = ScriptableObject.CreateInstance<CardVM>();
+            IndexChanged += viewModel.Index.Update;
         }
 
         void Start()
         {
             
+        }
+
+        private void OnDisable()
+        {
+            IndexChanged -= viewModel.Index.Update;
         }
     }
 }

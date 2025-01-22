@@ -8,9 +8,10 @@ namespace UnityRoyale
     public class GameScreen : UIController<GameScreenVM>
     {
         VisualElement _cardPanel, _backupPanel, _activePanel;
+        DeckPileElement _deckPile;
 
         public VisualElement CardPanel => _cardPanel;
-        public VisualElement BackupPanel => _backupPanel;
+        public DeckPileElement DeckPile => _deckPile;
         public VisualElement ActivePanel => _activePanel;
 
         void OnEnable()
@@ -18,7 +19,8 @@ namespace UnityRoyale
             var root = view.rootVisualElement;
             _cardPanel = root.Q("cardpanel");
             //_cardPanel.style.display = DisplayStyle.None;
-            _backupPanel = root.Q("backup");
+            //_backupPanel = root.Q("backup");
+            _deckPile = root.Q<DeckPileElement>();
             _activePanel = root.Q("active");
 
             viewModel.IsVisible.Value = false;

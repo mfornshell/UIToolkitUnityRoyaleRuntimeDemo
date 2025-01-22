@@ -1,4 +1,5 @@
 using System;
+using Unity.Properties;
 using UnityEngine;
 
 namespace UnityRoyale
@@ -13,6 +14,7 @@ namespace UnityRoyale
         public Sprite CardArt => _cardArt;
         public Observer<int> Damage => _damage;
         public Observer<int> Health => _health;
+        [CreateProperty] public Observer<int> Index { get; set; } = new();
 
         internal void Initialize(CardData cardData)
         {

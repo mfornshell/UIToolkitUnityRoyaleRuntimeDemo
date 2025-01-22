@@ -20,5 +20,8 @@
                 </ui:Label>
             </ui:VisualElement>
         </ui:VisualElement>
+        <Bindings>
+            <ui:DataBinding property="Index" data-source-path="Index.Value" binding-mode="ToTarget" />
+        </Bindings>
     </UnityRoyale.CardElement>
 </ui:UXML>

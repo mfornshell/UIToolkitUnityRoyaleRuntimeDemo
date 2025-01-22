@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UIElements.Experimental;
@@ -8,13 +8,14 @@ namespace UnityRoyale
     [UxmlElement]
     public partial class CardElement : VisualElement
     {
-        public CardData cardData { get; private set; }
+        CardData _cardData;
+        public CardData cardData => _cardData;
+
+        [UxmlAttribute, CreateProperty] public int Index { get; set; }
 
         public void Init(CardData cardData)
         {
-            this.cardData = cardData;
-            var portraitImage = this.Q<VisualElement>("image");
-            portraitImage.style.backgroundImage = this.cardData.cardImage.texture;
+            _cardData = cardData;
         }
         
         public void ChangeActiveState(bool isActive)
@@ -60,19 +61,5 @@ namespace UnityRoyale
         {
             RemoveFromHierarchy();
         }
-
-#if UNITY_EDITOR
-        [InitializeOnLoadMethod]
-#else
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-#endif
-        public static void RegisterConverters()
-        {
-            var group = new ConverterGroup("Sprite to BackgroundImage");
-            group.AddConverter((ref Sprite b) => b ? new StyleEnum<DisplayStyle>(DisplayStyle.Flex)
-                                                 : new StyleEnum<DisplayStyle>(DisplayStyle.None));
-            //ConverterGroups.RegisterConverterGroup(group);
-        }
-
     }
 }

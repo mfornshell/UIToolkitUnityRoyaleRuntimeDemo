@@ -28,10 +28,12 @@ namespace UnityRoyale
         private GameObject previewHolder;
         private readonly Vector3 InputCreationOffset = new Vector3(0f, 0f, 1f); //offsets the creation of units so that they are not under the player's finger
 
+        int _playAreaCount;
+
         private void Awake()
         {
             previewHolder = new GameObject("PreviewHolder");
-            cards = new CardElement[3]; //3 is the length of the dashboard
+            cards = new CardElement[cardCount]; //3 is the length of the dashboard
         }
 
         private void Start()
@@ -52,26 +54,33 @@ namespace UnityRoyale
             Debug.Log("Player's deck loaded");
 
             _gameScreen.ShowGameScreen();
-            //setup initial cards
-            StartCoroutine(AddCardToDeck(.1f));
-            for(int i=0; i< cardCount; i++)
+
+            StartCoroutine(FillPlayArea());
+        }
+
+        //deprecate
+        IEnumerator FillPlayArea()
+        {
+            yield return AddCardToDeck(.4f);
+            for (int i = 0; i < cards.Length; i++)
             {
-                StartCoroutine(PromoteCardFromDeck(i, .4f + i));
-                StartCoroutine(AddCardToDeck(.8f + i));
+                yield return FillSlot(i);
             }
         }
 
-        private VisualElement GetBackupContainer()
+        IEnumerator FillSlot(int index)
         {
-            //var root = _gameScreen.GetCardPanelRoot();
-            //return root.Q<VisualElement>("backup");
-            return _gameScreen.BackupPanel;
+            yield return PromoteCardFromDeck(index, .8f);
+            yield return AddCardToDeck(.4f);
+        }
+
+        private DeckPileElement GetBackupContainer()
+        {
+            return _gameScreen.DeckPile;
         }
 
         private VisualElement GetActiveContainer()
         {
-            //var root = _gameScreen.GetCardPanelRoot();
-            //return root.Q<VisualElement>("active");
             return _gameScreen.ActivePanel;
         }
 
@@ -80,24 +89,29 @@ namespace UnityRoyale
         {
             yield return new WaitForSecondsRealtime(delay);
 
-            var backupContainer = GetBackupContainer();
-            var backupCard = backupContainer.Q<CardElement>();
+            var deckPile = _gameScreen.DeckPile;
+            //var backupCard = backupContainer.Q<CardElement>();
+            var card = deckPile.Card;
+
+            card.Index = cardId;
             
-            //setup listeners on Card events
-            backupCard.RegisterCallback<MouseDownEvent>(evt => CardTapped(evt, cardId));
-            backupCard.RegisterCallback<MouseUpEvent>(evt => CardReleased(evt, cardId));
-            backupCard.RegisterCallback<MouseMoveEvent>(evt => CardDragged(evt, cardId));
-            
-            Vector2 screenPosition = backupCard.LocalToWorld(backupCard.transform.position);
+            Vector2 screenPosition = card.LocalToWorld(card.transform.position);
 
             var activePanel = GetActiveContainer();
-            activePanel.Add(backupCard);
+            activePanel.Add(card);
 
-            backupCard.MoveTo(backupCard.WorldToLocal(screenPosition));
-            backupCard.MoveAndScaleIntoPosition(cardId, ComputeActiveCardPosition(cardId));
+            card.MoveTo(card.WorldToLocal(screenPosition));
+            card.MoveAndScaleIntoPosition(cardId, ComputeActiveCardPosition(cardId));
+
+            // TODO need to wait for MoveAndScale, use an event callback to set MouseEvents 
+            //yield return new WaitForSeconds(.4f);
+
+            card.RegisterCallback<MouseDownEvent>(evt => CardTapped(evt, cardId));
+            card.RegisterCallback<MouseUpEvent>(evt => CardReleased(evt, cardId));
+            card.RegisterCallback<MouseMoveEvent>(evt => CardDragged(evt, cardId));
 
             //store a reference to the Card component in the array
-            cards[cardId] =  backupCard;
+            cards[cardId] =  card;
         }
 
         //adds a new card to the deck on the left, ready to be used
@@ -105,19 +119,10 @@ namespace UnityRoyale
         {
             yield return new WaitForSecondsRealtime(delay);
 
-            //create new card
-
             var card = Instantiate(_cardPrefab, _gameScreen.transform);
-            card.Initialize(playersDeck.GetNextCardFromDeck(), _gameScreen.BackupPanel);
+            card.Initialize(playersDeck.GetNextCardFromDeck());
 
-            //var tree = visualTreeCard.CloneTree();
-            //var cardElement = tree.Q<CardElement>();
-            //GetBackupContainer().Add(cardElement);
-            var cardElement = card.CardElement;
-            //cardElement.Init(playersDeck.GetNextCardFromDeck());
-            cardElement.Scale(0.1f);
-            cardElement.AnimatedScale(0.7f, 0.2f);
-            cardElement.MoveTo(new Vector2(10, 10));
+            _gameScreen.DeckPile.AddCard(card.CardElement);
         }
 
         private int draggedCardId = -1;
