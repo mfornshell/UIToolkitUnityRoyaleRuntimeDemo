@@ -29,6 +29,7 @@ namespace UnityRoyale
         private readonly Vector3 InputCreationOffset = new Vector3(0f, 0f, 1f); //offsets the creation of units so that they are not under the player's finger
 
         int _playAreaCount;
+        bool _deckReady;
 
         private void Awake()
         {
@@ -58,30 +59,55 @@ namespace UnityRoyale
             StartCoroutine(FillPlayArea());
         }
 
-        //deprecate
         IEnumerator FillPlayArea()
         {
-            yield return AddCardToDeck(.4f);
-            for (int i = 0; i < cards.Length; i++)
+            while (true)
             {
-                yield return FillSlot(i);
+                if (!_deckReady)
+                {
+                    yield return AddCardToDeck(.4f);
+                }
+                else if (CanFill(out int index))
+                {
+                    yield return PromoteCardFromDeck(index, .8f);
+                }
+                else yield return null;
             }
-        }
-
-        IEnumerator FillSlot(int index)
-        {
-            yield return PromoteCardFromDeck(index, .8f);
-            yield return AddCardToDeck(.4f);
-        }
-
-        private DeckPileElement GetBackupContainer()
-        {
-            return _gameScreen.DeckPile;
+            
+            bool CanFill(out int index)
+            {
+                for (int i = 0; i < cards.Length; i++)
+                {
+                    if (cards[i] == null)
+                    {
+                        index = i;
+                        return true;
+                    }
+                }
+                index = -1;
+                return false;
+            }
         }
 
         private VisualElement GetActiveContainer()
         {
             return _gameScreen.ActivePanel;
+        }
+
+        IEnumerator MoveToPlayArea(int index, float delay = .4f)
+        {
+            var card = _gameScreen.DeckPile.Card;
+            card.Index = index;
+            cards[index] = card;
+
+            yield return null;
+        }
+
+        void RegisterCardCallbacks(CardElement card)
+        {
+            card.RegisterCallback<MouseDownEvent>(evt => CardTapped(evt, card.Index));
+            card.RegisterCallback<MouseUpEvent>(evt => CardReleased(evt, card.Index));
+            card.RegisterCallback<MouseMoveEvent>(evt => CardDragged(evt, card.Index));
         }
 
         //moves the preview card from the deck to the active card dashboard
@@ -94,6 +120,7 @@ namespace UnityRoyale
             var card = deckPile.Card;
 
             card.Index = cardId;
+
             
             Vector2 screenPosition = card.LocalToWorld(card.transform.position);
 
@@ -112,6 +139,7 @@ namespace UnityRoyale
 
             //store a reference to the Card component in the array
             cards[cardId] =  card;
+            _deckReady = false;
         }
 
         //adds a new card to the deck on the left, ready to be used
@@ -123,6 +151,8 @@ namespace UnityRoyale
             card.Initialize(playersDeck.GetNextCardFromDeck());
 
             _gameScreen.DeckPile.AddCard(card.CardElement);
+
+            _deckReady = true;
         }
 
         private int draggedCardId = -1;
@@ -202,9 +232,10 @@ namespace UnityRoyale
 
                 ClearPreviewObjects();
                 cards[cardId].Delete(); //remove the card itself
-
-                StartCoroutine(PromoteCardFromDeck(cardId, .2f));
-                StartCoroutine(AddCardToDeck(.6f));
+                cards[cardId] = null;
+                
+                //StartCoroutine(PromoteCardFromDeck(cardId, .2f));
+                //StartCoroutine(AddCardToDeck(.6f));
             }
             else
             {
