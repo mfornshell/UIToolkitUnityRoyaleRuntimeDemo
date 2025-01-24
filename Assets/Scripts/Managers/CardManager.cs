@@ -8,6 +8,10 @@ using System;
 
 namespace UnityRoyale
 {
+
+    // TODO: need to create a Card class that is interacted with and passes info to CardUI
+    // should be able to get rid of a lot of tight coupling this way
+    // means that callbacks and everything should be registered through Card class
     public class CardManager : MonoBehaviour
     {
         GameScreen _gameScreen;
@@ -30,6 +34,8 @@ namespace UnityRoyale
 
         int _playAreaCount;
         bool _deckReady;
+        CardElement _currentCard;
+        Vector2 _mouseOffset;
 
         private void Awake()
         {
@@ -89,6 +95,15 @@ namespace UnityRoyale
             }
         }
 
+        IEnumerator Iterate()
+        {
+            if (!_deckReady)
+                yield return AddCardToDeck(.4f);
+            else if (_gameScreen.PlayingAreaUI.CanAdd())
+                yield return MoveToPlayArea(0, .8f);
+            else yield return null;
+        }
+
         private VisualElement GetActiveContainer()
         {
             return _gameScreen.PlayingArea;
@@ -96,21 +111,22 @@ namespace UnityRoyale
 
         IEnumerator MoveToPlayArea(int index, float delay = .4f)
         {
-            var card = _gameScreen.DeckPile.Card;
+            var card = _gameScreen.DeckPile.CardUI;
 
-            _gameScreen.PlayingArea.AddCard(index, card);
-            //card.Index = index;
-            //cards[index] = card;
+            _gameScreen.PlayingAreaUI.Add(card);
 
+            _deckReady = false;
 
-            yield return null;
+            yield return card.AnimatedMove(_gameScreen.PlayingAreaUI);
+
+            RegisterCardCallbacks(card.CardElement);
         }
 
         void RegisterCardCallbacks(CardElement card)
         {
-            card.RegisterCallback<MouseDownEvent>(evt => CardTapped(evt, card.Index));
+            card.RegisterCallback<MouseDownEvent>(evt => OnCardClicked(evt, card));
             card.RegisterCallback<MouseUpEvent>(evt => CardReleased(evt, card.Index));
-            card.RegisterCallback<MouseMoveEvent>(evt => CardDragged(evt, card.Index));
+            card.RegisterCallback<MouseMoveEvent>(evt => OnCardDragged(evt, card));
         }
 
         //moves the preview card from the deck to the active card dashboard
@@ -171,6 +187,64 @@ namespace UnityRoyale
             mouseDownPosition = clickEvent.mousePosition;
         }
 
+        void OnCardClicked(MouseDownEvent clickEvent, CardElement card)
+        {
+            card.SetAsLastSibling();
+            forbiddenAreaRenderer.enabled = true;
+            _currentCard = card;
+            _mouseOffset = clickEvent.mousePosition - new Vector2(card.transform.position.x, card.transform.position.y);
+        }
+
+        private void Update()
+        {
+            if (_currentCard == null) return;
+
+            //var pos = 
+        }
+
+        void OnCardDragged(MouseMoveEvent mouseMoveEvent, CardElement card)
+        {
+            if (_currentCard != card) return;
+
+            var pos = mouseMoveEvent.mousePosition - _mouseOffset;
+            card.MoveTo(pos);
+
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, playingFieldMask))
+            {
+                if (!cardIsActive)
+                {
+                    cardIsActive = true;
+                    previewHolder.transform.position = hit.point;
+                    card.ChangeActiveState(true);
+
+                    PlaceableData[] dataToSpawn = card.cardData.placeablesData;
+                    Vector3[] offsets = card.cardData.relativeOffsets;
+
+                    for (int i = 0; i < dataToSpawn.Length; i++)
+                    {
+                        Instantiate(dataToSpawn[i].associatedPrefab, hit.point + offsets[i] + InputCreationOffset,
+                            Quaternion.identity, previewHolder.transform);
+                    }
+                }
+                else
+                {
+                    previewHolder.transform.position = hit.point;
+                }
+            }
+            else
+            {
+                if (cardIsActive)
+                {
+                    cardIsActive = false;
+                    card.ChangeActiveState(false); //show card
+
+                    ClearPreviewObjects();
+                }
+            }
+        }
+
         private void CardDragged(IMouseEvent dragEvent, int cardId)
         {
             if (cardId != draggedCardId)
@@ -221,6 +295,33 @@ namespace UnityRoyale
                     ClearPreviewObjects();
                 }
             }
+        }
+
+        void OnCardReleased(MouseUpEvent mouseUpEvent, int index)
+        {
+            var card = _gameScreen.PlayingAreaUI.Cards[index].CardElement;
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, playingFieldMask))
+            {
+                //GameManager registers to OnCardUsed to spawn the actual Placeable
+                OnCardUsed?.Invoke(card.cardData, hit.point + InputCreationOffset,
+                    Placeable.Faction.Player);
+
+                ClearPreviewObjects();
+                card.Delete(); //remove the card itself
+                //cards[cardId] = null;
+
+                //StartCoroutine(PromoteCardFromDeck(cardId, .2f));
+                //StartCoroutine(AddCardToDeck(.6f));
+            }
+            else
+            {
+                card.ResetPosition();
+            }
+
+            forbiddenAreaRenderer.enabled = false;
+            _currentCard = null;
         }
 
         private void CardReleased(MouseUpEvent mouseUpEvent, int cardId)

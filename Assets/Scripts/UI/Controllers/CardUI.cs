@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -47,6 +48,15 @@ namespace UnityRoyale
         private void OnDisable()
         {
             IndexChanged -= viewModel.Index.Update;
+        }
+
+        internal IEnumerator AnimatedMove(PlayingAreaUI playingAreaUI)
+        {
+            var endPos = playingAreaUI.Element.CalculatePosAndSpeed(Index);
+            var anim = CardElement.AnimatedMoveTo(endPos, Index);
+
+            while (anim.isRunning)
+                yield return null;
         }
     }
 }

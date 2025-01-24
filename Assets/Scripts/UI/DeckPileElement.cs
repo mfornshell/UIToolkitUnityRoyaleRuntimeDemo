@@ -12,6 +12,7 @@ public partial class DeckPileElement : VisualElement
     static Vector2 _previewPosition = new Vector2(10f, 10f);
 
     public CardElement Card { get; private set; }
+    public CardUI CardUI { get; private set; }
 
     public void AddCard(CardElement cardElement)
     {
@@ -21,5 +22,11 @@ public partial class DeckPileElement : VisualElement
         cardElement.MoveTo(_previewPosition);
         cardElement.Scale(_scale);
         cardElement.AnimatedScale(_animateScale, _animateDuration);
+    }
+
+    public void AddCard(CardUI cardUI)
+    {
+        CardUI = cardUI;
+        AddCard(cardUI.CardElement);
     }
 }

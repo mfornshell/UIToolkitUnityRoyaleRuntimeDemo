@@ -12,7 +12,7 @@ namespace UnityRoyale
         public CardData cardData => _cardData;
 
         [UxmlAttribute, CreateProperty] public int Index { get; set; }
-        public Vector3 Position { get; set; }
+        Translate _position = new();
 
         public void Init(CardData cardData)
         {
@@ -26,7 +26,7 @@ namespace UnityRoyale
 
         public void MoveAndScaleIntoPosition(int distance, Vector2 position)
         {
-            AnimatedMoveTo(position, .2f + (.05f * distance));
+            AnimatedMoveTo(position, distance);
             Scale(1f);
         }
         
@@ -41,13 +41,13 @@ namespace UnityRoyale
 
         public void MoveTo(Vector2 screenPosition)
         {
-            //transform.position = new Vector3(screenPosition.x, screenPosition.y, transform.position.z);
-            style.translate = new Translate(screenPosition.x, screenPosition.y);
+            _position = new Translate(screenPosition.x, screenPosition.y);
+            style.translate = _position;
         }
-        public void AnimatedMoveTo(Vector2 endPosition, float tweenDuration)
+        public ValueAnimation<Vector3> AnimatedMoveTo(Vector2 endPosition, float distance)
         {
-            experimental.animation.Position(new Vector3(endPosition.x, endPosition.y, transform.position.z),
-                Mathf.RoundToInt(tweenDuration * 1000)).Ease(Easing.OutQuad);
+            return experimental.animation.Position(new Vector3(endPosition.x, endPosition.y, transform.position.z),
+                Mathf.RoundToInt(GetDuration(distance) * 1000)).Ease(Easing.OutQuad);
         }
         public void Translate(Vector2 screenPositionDelta)
         {
@@ -63,5 +63,9 @@ namespace UnityRoyale
         {
             RemoveFromHierarchy();
         }
+
+        public void ResetPosition() => style.translate = _position;
+
+        public float GetDuration(float distance) => .2f + (.05f * distance);
     }
 }
