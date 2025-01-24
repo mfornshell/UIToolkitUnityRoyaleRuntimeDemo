@@ -12,6 +12,7 @@ namespace UnityRoyale
         public CardData cardData => _cardData;
 
         [UxmlAttribute, CreateProperty] public int Index { get; set; }
+        public Vector3 Position { get; set; }
 
         public void Init(CardData cardData)
         {
@@ -23,9 +24,9 @@ namespace UnityRoyale
             this.style.opacity = (isActive) ? .05f : 1f;
         }
 
-        public void MoveAndScaleIntoPosition(int cardSlot, Vector2 position)
+        public void MoveAndScaleIntoPosition(int distance, Vector2 position)
         {
-            AnimatedMoveTo(position, .2f + (.05f * cardSlot));
+            AnimatedMoveTo(position, .2f + (.05f * distance));
             Scale(1f);
         }
         
@@ -40,7 +41,8 @@ namespace UnityRoyale
 
         public void MoveTo(Vector2 screenPosition)
         {
-            transform.position = new Vector3(screenPosition.x, screenPosition.y, transform.position.z);
+            //transform.position = new Vector3(screenPosition.x, screenPosition.y, transform.position.z);
+            style.translate = new Translate(screenPosition.x, screenPosition.y);
         }
         public void AnimatedMoveTo(Vector2 endPosition, float tweenDuration)
         {

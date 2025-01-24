@@ -38848,6 +38848,52 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1692820699}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1695746529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695746530}
+  - component: {fileID: 1695746531}
+  m_Layer: 0
+  m_Name: PlayingArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1695746530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695746529}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5757238599306438210}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1695746531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695746529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e8005742bb7d64bafd64119f3117d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModel: {fileID: 0}
+  view: {fileID: 0}
 --- !u!1001 &1703200464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50434,8 +50480,6 @@ MonoBehaviour:
   playingFieldMask:
     serializedVersion: 2
     m_Bits: 1024
-  visualTreeCard: {fileID: 9197481963319205126, guid: 05ae1745d4bd5474e966b4103ad18531,
-    type: 3}
   playersDeck: {fileID: 11400000, guid: a7dabc74b29d3475291fbb95a8ab8b70, type: 2}
   _cardPrefab: {fileID: 1854446877900879165, guid: 595efaf7858258d46927b612b95485d1,
     type: 3}
@@ -50606,7 +50650,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1695746530}
   m_Father: {fileID: 512051576}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &7396737023500930468 stripped
@@ -50629,6 +50674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewModel: {fileID: 11400000, guid: 9c5d47435d0be824999dbcc4a93948d7, type: 2}
   view: {fileID: 9031842704942719472}
+  _playingAreaUI: {fileID: 1695746531}
 --- !u!1001 &8356289988212844313
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@
     height: 100px;
 }
 
-.play-area-container {
+.playingarea {
     flex-direction: row;
     -unity-background-scale-mode: stretch-to-fill;
     background-color: rgba(255, 255, 255, 0);

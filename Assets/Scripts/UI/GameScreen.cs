@@ -7,21 +7,26 @@ namespace UnityRoyale
     [RequireComponent(typeof(UIDocument))]
     public class GameScreen : UIController<GameScreenVM>
     {
-        VisualElement _cardPanel, _backupPanel, _activePanel;
+        [SerializeField] PlayingAreaUI _playingAreaUI;
+
+        VisualElement _cardPanel;
         DeckPileElement _deckPile;
+        PlayingAreaElement _playingArea;
 
         public VisualElement CardPanel => _cardPanel;
         public DeckPileElement DeckPile => _deckPile;
-        public VisualElement ActivePanel => _activePanel;
+        public PlayingAreaElement PlayingArea => _playingArea;
+
+        public PlayingAreaUI PlayingAreaUI => _playingAreaUI;
 
         void OnEnable()
         {
             var root = view.rootVisualElement;
             _cardPanel = root.Q("cardpanel");
-            //_cardPanel.style.display = DisplayStyle.None;
-            //_backupPanel = root.Q("backup");
             _deckPile = root.Q<DeckPileElement>();
-            _activePanel = root.Q("active");
+            _playingArea = root.Q<PlayingAreaElement>();
+
+            _playingAreaUI.Initialize(_playingArea);
 
             viewModel.IsVisible.Value = false;
         }

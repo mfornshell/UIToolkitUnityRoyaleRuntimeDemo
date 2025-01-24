@@ -91,14 +91,17 @@ namespace UnityRoyale
 
         private VisualElement GetActiveContainer()
         {
-            return _gameScreen.ActivePanel;
+            return _gameScreen.PlayingArea;
         }
 
         IEnumerator MoveToPlayArea(int index, float delay = .4f)
         {
             var card = _gameScreen.DeckPile.Card;
-            card.Index = index;
-            cards[index] = card;
+
+            _gameScreen.PlayingArea.AddCard(index, card);
+            //card.Index = index;
+            //cards[index] = card;
+
 
             yield return null;
         }
@@ -122,12 +125,14 @@ namespace UnityRoyale
             card.Index = cardId;
 
             
-            Vector2 screenPosition = card.LocalToWorld(card.transform.position);
+            //Vector2 screenPosition = card.LocalToWorld(card.transform.position);
 
-            var activePanel = GetActiveContainer();
-            activePanel.Add(card);
 
-            card.MoveTo(card.WorldToLocal(screenPosition));
+            //var activePanel = GetActiveContainer();
+            //activePanel.Add(card);
+            _gameScreen.PlayingArea.AddCard(cardId, card);
+
+            //card.MoveTo(card.WorldToLocal(screenPosition));
             card.MoveAndScaleIntoPosition(cardId, ComputeActiveCardPosition(cardId));
 
             // TODO need to wait for MoveAndScale, use an event callback to set MouseEvents 
